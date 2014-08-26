@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+
+<html>
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+    <title>Simulation des phases de la Lune</title>
+
+    <link rel="stylesheet" href="phaseslune.css">
+    
+</head>
+
+<body>
+    <h1>Simulation des phases de la Lune</h1>
+
+    <div id="drawingarea">
+        <canvas id="earthcanvas" width="600" height="500">
+            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+            utiliser un navigateur Internet moderne et à jour.
+        </canvas>
+        <canvas id="maincanvas" width="600" height="500">
+            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+            utiliser un navigateur Internet moderne et à jour.
+        </canvas>
+        <canvas id="mooncanvas" width="600" height="500">
+            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+            utiliser un navigateur Internet moderne et à jour.
+        </canvas>
+    </div>
+
+    <a class="customButton" href="javascript:void(0)" 
+        onclick="launchAnimation();" ontouchstart="">Animer</a>
+    <a class="customButton" href="javascript:void(0)" 
+        onclick="pause();" ontouchstart="">Arrêter</a>
+
+    <input id="speedSlider" type="range"
+           min="0" max="8000" step="100" value="4000" />
+
+    <script src="phaseslune.js"></script>
+    
+</body>
+</html>
