@@ -1,7 +1,7 @@
 phaseslune
 ==========
 
-Laboratoire virtuel pour expérimenter avec les phases de la lune
+Laboratoire virtuel pour expérimenter avec les phases de la Lune
 
 
 Le laboratoire est construit en HTML5, CSS3 et JavaScript. Il permet d'explorer
