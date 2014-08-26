@@ -180,5 +180,3 @@ function pause() {
 }
 
 initFigure();
-launchAnimation();
-pause();
