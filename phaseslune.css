@@ -1,8 +1,20 @@
+#images {
+    width: 710px;
+    height: 500px;
+    position: relative;
+}
+
 #drawingarea {
     background-color: #000;
     height: 500px;
     width: 600px;
     position: relative;
+}
+
+#moonphase {
+    position: absolute;
+    top: 0;
+    right: 0;
 }
 
 canvas {
@@ -37,4 +49,5 @@ canvas {
     background: -webkit-linear-gradient(#909090,#808080,#808080,#707070);
     background: linear-gradient(#909090,#808080,#808080,#707070);
 }
+
 

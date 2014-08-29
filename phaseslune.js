@@ -5,6 +5,7 @@ var moonContext = moonCanvas.getContext("2d");
 var mainCanvas = document.getElementById("maincanvas");
 var mainContext = mainCanvas.getContext("2d");
 var debug = document.getElementById("debug");
+var moonImg = document.getElementById("moonphase");
 
 var leftPadding = 100;
 var centerx = leftPadding + mainCanvas.height / 2;
@@ -52,7 +53,7 @@ var savedEarthTheta;
 function mouseDown(e) {
     e.preventDefault();
     mouseIsDown = true;
-    debug.innerHTML += "mouse down on " + e.pageX + ", " + e.pageY + "<br />";
+    //debug.innerHTML += "mouse down on " + e.pageX + ", " + e.pageY + "<br />";
     if ((e.pageX - leftMargin - moonx) * (e.pageX - leftMargin - moonx) +
         (e.pageY - topMargin - moony) * (e.pageY - topMargin - moony) < moonRadius * moonRadius) {
             selectedObject = "moon";
@@ -132,6 +133,13 @@ function drawEarth() {
     earthContext.fill();
 }
 
+function pad(n, width, z) {
+    // Pad a number with n leading zeros
+    z = z || '0';
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+}
+
 function drawMoon() {
     moonContext.clearRect(0, 0, moonCanvas.width, moonCanvas.height);
     // Position Moon on its orbit
@@ -149,6 +157,13 @@ function drawMoon() {
     moonContext.drawImage(moon, moonx - moonRadius, moony - moonRadius,
                           2 * moonRadius, 2 * moonRadius);
     moonContext.restore();
+
+    var cycleAngle = (Math.PI - moonOrbitalTheta) % (2 * Math.PI);
+    while (cycleAngle < 0) {
+        cycleAngle += 2 * Math.PI;
+    }
+    var cycleFrac = 2 * Math.round((1 - cycleAngle/(2 * Math.PI)) * 180);
+    moonImg.innerHTML = '<img src="assets/moon/m' + pad(cycleFrac, 3) + '.gif" alt="Image de la Lune" />'
     
     // Draw shadow on Moon
     moonContext.beginPath();
@@ -163,7 +178,8 @@ function drawMoon() {
 function animate() {
     var dt = Number(speedSlider.value);
     earthTheta += (earthOmega * dt) % (2 * Math.PI);
-    moonOrbitalTheta += (moonOmega * dt) % (2 * Math.PI);
+    moonOrbitalTheta += (moonOmega * dt);
+    moonOrbitalTheta %= (2 * Math.PI);
     drawEarth();
     drawMoon();
 
