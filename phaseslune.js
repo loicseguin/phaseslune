@@ -4,6 +4,8 @@ var moonCanvas = document.getElementById("mooncanvas");
 var moonContext = moonCanvas.getContext("2d");
 var mainCanvas = document.getElementById("maincanvas");
 var mainContext = mainCanvas.getContext("2d");
+var moonPhaseCanvas = document.getElementById("moonphasecanvas");
+var moonPhaseContext = moonPhaseCanvas.getContext("2d");
 var debug = document.getElementById("debug");
 var moonImg = document.getElementById("moonphase");
 
@@ -40,6 +42,8 @@ var earth = new Image();
 earth.src = "assets/earth_north.jpg";
 var moon = new Image();
 moon.src = "assets/moon_north.jpg";
+var moonphase = new Image();
+moonphase.src = "assets/Full_Moon_Luc_Viatour.jpg";
 window.addEventListener("load", initFigure); 
 
 // Some variables to figure out where the canvas is on the page.
@@ -111,6 +115,8 @@ function initFigure() {
 
     // Draw Earth
     earth.onload = drawEarth();
+
+    drawMoonPhase();
 }
 
 function drawEarth() {
@@ -158,12 +164,13 @@ function drawMoon() {
                           2 * moonRadius, 2 * moonRadius);
     moonContext.restore();
 
-    var cycleAngle = (Math.PI - moonOrbitalTheta) % (2 * Math.PI);
-    while (cycleAngle < 0) {
-        cycleAngle += 2 * Math.PI;
-    }
-    var cycleFrac = 2 * Math.round((1 - cycleAngle/(2 * Math.PI)) * 180);
-    moonImg.innerHTML = '<img src="assets/moon/m' + pad(cycleFrac, 3) + '.gif" alt="Image de la Lune" />'
+    drawMoonPhase();
+    //var cycleAngle = (Math.PI - moonOrbitalTheta) % (2 * Math.PI);
+    //while (cycleAngle < 0) {
+        //cycleAngle += 2 * Math.PI;
+    //}
+    //var cycleFrac = 2 * Math.round((1 - cycleAngle/(2 * Math.PI)) * 180);
+    //moonImg.innerHTML = '<img src="assets/moon/m' + pad(cycleFrac, 3) + '.gif" alt="Image de la Lune" />'
     
     // Draw shadow on Moon
     moonContext.beginPath();
@@ -173,6 +180,76 @@ function drawMoon() {
     moonContext.moveTo(moonx, moony - moonRadius);
     moonContext.lineTo(moonx, moony + moonRadius);
     moonContext.fill();
+}
+
+var scaleFactorX;
+
+function drawMoonPhase() {
+    moonPhaseContext.clearRect(0, 0, moonPhaseCanvas.width, moonPhaseCanvas.height);
+    moonPhaseContext.drawImage(moonphase, 0, 0, 200, 200);
+    moonPhaseContext.save();
+    scaleFactorX = (Math.abs(moonx - centerx)) / moonOrbitRadius;
+
+    moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
+    if (moony - centery >= 0 && moonx - centerx <= 0) {
+        // Waxing crescent
+        moonPhaseContext.scale(scaleFactorX, 1);
+        moonPhaseContext.beginPath();
+        moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
+                             moonPhaseCanvas.height / 2,
+                             90, 1.5 * Math.PI, 0.5 * Math.PI);
+        moonPhaseContext.restore();
+        moonPhaseContext.fill();
+
+        moonPhaseContext.beginPath();
+        moonPhaseContext.rect(0, 0, moonPhaseCanvas.width / 2,
+                              moonPhaseCanvas.height);
+        moonPhaseContext.fill();
+    }
+    else if (moony - centery > 0) {
+        // Waxing gibbous
+        moonPhaseContext.scale(scaleFactorX, 1);
+        moonPhaseContext.beginPath();
+        moonPhaseContext.moveTo(0, moonPhaseCanvas.height);
+        moonPhaseContext.lineTo(moonPhaseCanvas.width / 2 / scaleFactorX, 190);
+        moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
+                             moonPhaseCanvas.height / 2,
+                             90, 0.5 * Math.PI, 1.5 * Math.PI);
+        moonPhaseContext.restore();
+        moonPhaseContext.lineTo(0, 0);
+        moonPhaseContext.closePath();
+        moonPhaseContext.fill();
+    }
+    else if (moonx - centerx > 0) {
+        // Waning gibbous
+        moonPhaseContext.scale(scaleFactorX, 1);
+        moonPhaseContext.beginPath();
+        moonPhaseContext.moveTo(moonPhaseCanvas.width, 0);
+        moonPhaseContext.lineTo(moonPhaseCanvas.width / 2 / scaleFactorX, 10);
+        moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
+                             moonPhaseCanvas.height / 2,
+                             90, 1.5 * Math.PI, 0.5 * Math.PI);
+        moonPhaseContext.restore();
+        moonPhaseContext.lineTo(moonPhaseCanvas.width, moonPhaseCanvas.height, 0);
+        moonPhaseContext.lineTo(moonPhaseCanvas.width, 0);
+        moonPhaseContext.closePath();
+        moonPhaseContext.fill();
+    }
+    else {
+        // Waning crescent
+        moonPhaseContext.scale(scaleFactorX, 1);
+        moonPhaseContext.beginPath();
+        moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
+                             moonPhaseCanvas.height / 2,
+                             90, 0.5 * Math.PI, 1.5 * Math.PI);
+        moonPhaseContext.restore();
+        moonPhaseContext.fill();
+
+        moonPhaseContext.beginPath();
+        moonPhaseContext.rect(moonPhaseCanvas.width / 2, 0, moonPhaseCanvas.width / 2,
+                              moonPhaseCanvas.height);
+        moonPhaseContext.fill();
+    }
 }
 
 function animate() {
