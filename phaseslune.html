@@ -14,36 +14,38 @@
     <h1>Simulation des phases de la Lune</h1>
 
     <div id="images">
-    <div id="drawingarea">
-        <canvas id="earthcanvas" width="600" height="500">
-            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
-            utiliser un navigateur Internet moderne et à jour.
-        </canvas>
-        <canvas id="maincanvas" width="600" height="500">
-            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
-            utiliser un navigateur Internet moderne et à jour.
-        </canvas>
-        <canvas id="mooncanvas" width="600" height="500">
-            L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
-            utiliser un navigateur Internet moderne et à jour.
-        </canvas>
-    </div>
-
-        <aside id="moonphase">
-            <canvas id="moonphasecanvas" width="200px" height="200px">
+        <div id="drawingarea">
+            <canvas id="earthcanvas" width="600" height="500">
                 L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
                 utiliser un navigateur Internet moderne et à jour.
             </canvas>
-        </aside>
+            <canvas id="maincanvas" width="600" height="500">
+                L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+                utiliser un navigateur Internet moderne et à jour.
+            </canvas>
+            <canvas id="mooncanvas" width="600" height="500">
+                L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+                utiliser un navigateur Internet moderne et à jour.
+            </canvas>
+        </div>
+
+            <aside id="moonphase">
+                <canvas id="moonphasecanvas" width="200px" height="200px">
+                    L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+                    utiliser un navigateur Internet moderne et à jour.
+                </canvas>
+            </aside>
     </div>
 
-    <a class="customButton" href="javascript:void(0)" 
-        onclick="launchAnimation();" ontouchstart="">Animer</a>
-    <a class="customButton" href="javascript:void(0)" 
-        onclick="pause();" ontouchstart="">Arrêter</a>
+    <p>
+        <a class="customButton" href="javascript:void(0)" 
+            onclick="launchAnimation();" ontouchstart="">Animer</a>
+        <a class="customButton" href="javascript:void(0)" 
+            onclick="pause();" ontouchstart="">Arrêter</a>
 
-    <input id="speedSlider" type="range"
-           min="0" max="8000" step="100" value="4000" />
+        <input id="speedSlider" type="range"
+               min="0" max="8000" step="100" value="4000" />
+    </p>
 
     <div id="debug"></div>
 
