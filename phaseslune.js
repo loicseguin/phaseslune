@@ -64,7 +64,7 @@ function mouseDown(e) {
             //debug.innerHTML += "mouse down on Moon" + "<br />";
     }
     else if ((e.pageX - leftMargin - centerx) * (e.pageX - leftMargin - centerx) +
-             (e.pageY - topMargin - centery) * (e.pageY - topMargin - centery) < earthRadius * earthRadius) {
+             (e.pageY - topMargin - centery) * (e.pageY - topMargin - centery) < 3*earthRadius * earthRadius) {
             selectedObject = "earth";
             savedEarthTheta = earthTheta + Math.atan2(e.pageY - topMargin - centery,
                                                       e.pageX - leftMargin - centerx);
@@ -120,11 +120,26 @@ function initFigure() {
 }
 
 function drawEarth() {
+    earthContext.clearRect(0, 0, earthCanvas.width, earthCanvas.height);
     earthContext.save();
     earthContext.translate(centerx, centery);
     // Minus sign to rotate in the right direction, ie, counterclockwise.
     earthContext.rotate(-earthTheta);
     earthContext.translate(-centerx, -centery);
+    earthContext.beginPath();
+    earthContext.moveTo(centerx - earthRadius - 10, centery);
+    earthContext.lineTo(centerx - earthRadius - 20, centery);
+    earthContext.arc(centerx - earthRadius - 25, centery, 5, 0, 2 * Math.PI);
+    earthContext.moveTo(centerx - earthRadius - 10, centery);
+    earthContext.lineTo(centerx - earthRadius, centery + 5);
+    earthContext.moveTo(centerx - earthRadius - 10, centery);
+    earthContext.lineTo(centerx - earthRadius, centery - 5);
+    earthContext.moveTo(centerx - earthRadius - 15, centery);
+    earthContext.lineTo(centerx - earthRadius - 18, centery - 8);
+    earthContext.moveTo(centerx - earthRadius - 15, centery);
+    earthContext.lineTo(centerx - earthRadius - 18, centery + 8);
+    earthContext.strokeStyle = "white";
+    earthContext.stroke();
     earthContext.drawImage(earth, centerx - earthRadius, centery - earthRadius,
                            2 * earthRadius, 2 * earthRadius);
     earthContext.restore();
