@@ -8,6 +8,8 @@ var moonPhaseCanvas = document.getElementById("moonphasecanvas");
 var moonPhaseContext = moonPhaseCanvas.getContext("2d");
 var debug = document.getElementById("debug");
 var moonImg = document.getElementById("moonphase");
+var obsHour = document.getElementById("hour");
+var obsMinute = document.getElementById("minute");
 
 var leftPadding = 100;
 var centerx = leftPadding + mainCanvas.height / 2;
@@ -152,6 +154,21 @@ function drawEarth() {
     earthContext.moveTo(centerx, centery - earthRadius);
     earthContext.lineTo(centerx, centery + earthRadius);
     earthContext.fill();
+
+    // Uptime time of day
+    angleToHour(earthTheta);
+}
+
+function angleToHour(theta) {
+    // From a angle, determine time of day in hh:mm format.
+    var nbHours = ((12 + (theta % (2 * Math.PI)) * 24 / (2 * Math.PI))) % 24;
+    while (nbHours < 0) {
+        nbHours += 24;
+    }
+    var hour = Math.floor(nbHours).toFixed(0);
+    var minutes = pad(1, 2, (nbHours - hour).toFixed(0));
+    obsHour.innerHTML = hour;
+    obsMinute.innerHTML = minutes;
 }
 
 function pad(n, width, z) {
@@ -269,7 +286,8 @@ function drawMoonPhase() {
 
 function animate() {
     var dt = Number(speedSlider.value);
-    earthTheta += (earthOmega * dt) % (2 * Math.PI);
+    earthTheta += (earthOmega * dt);
+    earthTheta %= (2 * Math.PI);
     moonOrbitalTheta += (moonOmega * dt);
     moonOrbitalTheta %= (2 * Math.PI);
     drawEarth();

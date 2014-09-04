@@ -29,12 +29,18 @@
             </canvas>
         </div>
 
-            <aside id="moonphase">
-                <canvas id="moonphasecanvas" width="200px" height="200px">
-                    L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
-                    utiliser un navigateur Internet moderne et à jour.
-                </canvas>
-            </aside>
+        <aside id="moonphase">
+            <canvas id="moonphasecanvas" width="200px" height="200px">
+                L'élément <code>canvas</code> n'est pas supporté. S'il-vous-plaît,
+                utiliser un navigateur Internet moderne et à jour.
+            </canvas>
+        </aside>
+
+        <div id="obstime">
+            Heure pour l'observateur
+
+            <p><span id="hour">12</span>:<span id="minute">00</span></p>
+        </div>
     </div>
 
     <p>
@@ -43,8 +49,11 @@
         <a class="customButton" href="javascript:void(0)" 
             onclick="pause();" ontouchstart="">Arrêter</a>
 
-        <input id="speedSlider" type="range"
-               min="0" max="8000" step="100" value="4000" />
+        <span id="speedInfo">
+            Vitesse de l'animation
+            <input id="speedSlider" type="range"
+            min="0" max="8000" step="100" value="4000" />
+        </span>
     </p>
 
     <div id="debug"></div>

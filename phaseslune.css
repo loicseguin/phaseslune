@@ -41,6 +41,31 @@ p {
     right: 204px;
 }
 
+#obstime {
+    position: absolute;
+    top: 250px;
+    right: 4px;
+    width: 200px;
+}
+
+#hour {
+    display: inline-block;
+    text-align: right;
+    width: 1.8em;
+    padding-right: 0.6em;
+}
+
+#minute {
+    display: inline-block;
+    text-align: right;
+    width: 1.5em;
+}
+
+#speedInfo {
+    text-align: right;
+    float: right;
+}
+
 canvas {
     position: absolute;
     left: 0;
