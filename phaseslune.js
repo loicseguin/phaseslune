@@ -10,6 +10,8 @@ var debug = document.getElementById("debug");
 var moonImg = document.getElementById("moonphase");
 var obsHour = document.getElementById("hour");
 var obsMinute = document.getElementById("minute");
+var moonPhaseName = document.getElementById("phasenamep");
+var moonPosition = document.getElementById("moonposp");
 
 var leftPadding = 100;
 var centerx = leftPadding + mainCanvas.height / 2;
@@ -157,6 +159,8 @@ function drawEarth() {
 
     // Uptime time of day
     angleToHour(earthTheta);
+
+    updateObsMoonPos();
 }
 
 function angleToHour(theta) {
@@ -169,6 +173,41 @@ function angleToHour(theta) {
     var minutes = pad(1, 2, (nbHours - hour).toFixed(0));
     obsHour.innerHTML = hour;
     obsMinute.innerHTML = minutes;
+}
+
+function updateObsMoonPos() {
+    // Compute the position of the Moon in the observer's sky
+    moonOrbitalTheta %= 2 * Math.PI;
+    earthTheta %= 2 * Math.PI;
+    while (moonOrbitalTheta < 0) {
+        moonOrbitalTheta += 2 * Math.PI;
+    }
+    while (earthTheta < 0) {
+        earthTheta += 2 * Math.PI;
+    }
+
+    var dtheta = moonOrbitalTheta - earthTheta - Math.PI;
+    if (dtheta < -0.5 * Math.PI - 0.1) {
+        moonPosition.innerHTML = "Sous l'horizon";
+    }
+    else if (dtheta < -0.5 * Math.PI + 0.3) {
+        moonPosition.innerHTML = "Proche de l'horizon ouest";
+    }
+    else if (dtheta < -0.1) {
+        moonPosition.innerHTML = "Haut dans l'ouest";
+    }
+    else if (dtheta < 0.1) {
+        moonPosition.innerHTML = "Au zénith";
+    }
+    else if (dtheta < 0.5 * Math.PI - 0.3) {
+        moonPosition.innerHTML = "Haut dans l'est";
+    }
+    else if (dtheta < 0.5 * Math.PI + 0.1) {
+        moonPosition.innerHTML = "Proche de l'horizon est";
+    }
+    else {
+        moonPosition.innerHTML = "Sous l'horizon";
+    }
 }
 
 function pad(n, width, z) {
@@ -212,6 +251,8 @@ function drawMoon() {
     moonContext.moveTo(moonx, moony - moonRadius);
     moonContext.lineTo(moonx, moony + moonRadius);
     moonContext.fill();
+
+    updateObsMoonPos();
 }
 
 var scaleFactorX;
@@ -237,6 +278,17 @@ function drawMoonPhase() {
         moonPhaseContext.rect(0, 0, moonPhaseCanvas.width / 2,
                               moonPhaseCanvas.height);
         moonPhaseContext.fill();
+        if (Math.abs(moony - centery) > 10) {
+            if (Math.abs(moonx - centerx) > 10) {
+                moonPhaseName.innerHTML = "Premier croissant";
+            }
+            else {
+                moonPhaseName.innerHTML = "Premier quartier";
+            }
+        }
+        else {
+            moonPhaseName.innerHTML = "Nouvelle Lune";
+        }
     }
     else if (moony - centery > 0) {
         // Waxing gibbous
@@ -251,6 +303,17 @@ function drawMoonPhase() {
         moonPhaseContext.lineTo(0, 0);
         moonPhaseContext.closePath();
         moonPhaseContext.fill();
+        if (Math.abs(moony - centery) > 10) {
+            if (Math.abs(moonx - centerx) > 10) {
+                moonPhaseName.innerHTML = "Gibbeuse croissante";
+            }
+            else {
+                moonPhaseName.innerHTML = "Premier quartier";
+            }
+        }
+        else {
+            moonPhaseName.innerHTML = "Pleine Lune";
+        }
     }
     else if (moonx - centerx > 0) {
         // Waning gibbous
@@ -266,6 +329,17 @@ function drawMoonPhase() {
         moonPhaseContext.lineTo(moonPhaseCanvas.width, 0);
         moonPhaseContext.closePath();
         moonPhaseContext.fill();
+        if (Math.abs(moony - centery) > 10) {
+            if (Math.abs(moonx - centerx) > 10) {
+                moonPhaseName.innerHTML = "Gibbeuse décroissante";
+            }
+            else {
+                moonPhaseName.innerHTML = "Dernier quartier";
+            }
+        }
+        else {
+            moonPhaseName.innerHTML = "Pleine Lune";
+        }
     }
     else {
         // Waning crescent
@@ -281,6 +355,17 @@ function drawMoonPhase() {
         moonPhaseContext.rect(moonPhaseCanvas.width / 2, 0, moonPhaseCanvas.width / 2,
                               moonPhaseCanvas.height);
         moonPhaseContext.fill();
+        if (Math.abs(moony - centery) > 10) {
+            if (Math.abs(moonx - centerx) > 10) {
+                moonPhaseName.innerHTML = "Dernier croissant";
+            }
+            else {
+                moonPhaseName.innerHTML = "Dernier quartier";
+            }
+        }
+        else {
+            moonPhaseName.innerHTML = "Nouvelle Lune";
+        }
     }
 }
 

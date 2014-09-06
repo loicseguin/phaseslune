@@ -41,11 +41,35 @@ p {
     right: 204px;
 }
 
+#phasename {
+    position: absolute;
+    top: 220px;
+    right: 0px;
+    width: 200px;
+}
+
 #obstime {
     position: absolute;
-    top: 250px;
-    right: 4px;
+    top: 300px;
+    right: 0px;
     width: 200px;
+}
+
+#moonpos {
+    position: absolute;
+    top: 380px;
+    right: 0px;
+    width: 200px;
+}
+
+#obstime>h4, #phasename>h4, #moonpos>h4 {
+    margin: 0 0 0.3rem 0;
+}
+
+#obstime>p, #phasename>p, #moonpos>p {
+    padding: 0.6rem;
+    border: 1px solid #bbb;
+    background-color: #fafafa;
 }
 
 #hour {
