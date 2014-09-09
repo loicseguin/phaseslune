@@ -18,7 +18,7 @@ var centerx = leftPadding + mainCanvas.height / 2;
 var centery = mainCanvas.height / 2;
 
 var earthPeriod = 24 * 3600;       // One complete rotation in 24h
-var earthTheta = 0;                // Angular position for Earth
+var earthTheta = 0;                // Initial angular position for Earth
 var earthOmega = 2 * Math.PI / earthPeriod  // Angular speed for Earth
 var earthRadius = 35;
 
@@ -172,7 +172,7 @@ function angleToHour(theta) {
     var hour = Math.floor(nbHours).toFixed(0);
     var minutes = pad(1, 2, (nbHours - hour).toFixed(0));
     obsHour.innerHTML = hour;
-    obsMinute.innerHTML = minutes;
+    obsMinute.innerHTML = "00";
 }
 
 function updateObsMoonPos() {
@@ -186,17 +186,11 @@ function updateObsMoonPos() {
         earthTheta += 2 * Math.PI;
     }
 
-    var dtheta = moonOrbitalTheta - earthTheta - Math.PI;
-    if (dtheta < -0.5 * Math.PI - 0.1) {
-        moonPosition.innerHTML = "Sous l'horizon";
+    var dtheta = (moonOrbitalTheta + Math.PI) % (2 * Math.PI) - earthTheta;
+    while (dtheta < 0) {
+        dtheta += 2 * Math.PI
     }
-    else if (dtheta < -0.5 * Math.PI + 0.3) {
-        moonPosition.innerHTML = "Proche de l'horizon ouest";
-    }
-    else if (dtheta < -0.1) {
-        moonPosition.innerHTML = "Haut dans l'ouest";
-    }
-    else if (dtheta < 0.1) {
+    if (dtheta < 0.1) {
         moonPosition.innerHTML = "Au zénith";
     }
     else if (dtheta < 0.5 * Math.PI - 0.3) {
@@ -205,8 +199,17 @@ function updateObsMoonPos() {
     else if (dtheta < 0.5 * Math.PI + 0.1) {
         moonPosition.innerHTML = "Proche de l'horizon est";
     }
-    else {
+    else if (dtheta < 1.5 * Math.PI - 0.1) {
         moonPosition.innerHTML = "Sous l'horizon";
+    }
+    else if (dtheta < 1.5 * Math.PI + 0.3) {
+        moonPosition.innerHTML = "Proche de l'horizon ouest";
+    }
+    else if (dtheta < 2 * Math.PI - 0.1) {
+        moonPosition.innerHTML = "Haut dans l'ouest";
+    }
+    else {
+        moonPosition.innerHTML = "Au zénith";
     }
 }
 
@@ -263,11 +266,11 @@ function drawMoonPhase() {
     moonPhaseContext.save();
     scaleFactorX = (Math.abs(moonx - centerx)) / moonOrbitRadius;
 
-    moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
     if (moony - centery >= 0 && moonx - centerx <= 0) {
         // Waxing crescent
         moonPhaseContext.scale(scaleFactorX, 1);
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
                              moonPhaseCanvas.height / 2,
                              90, 1.5 * Math.PI, 0.5 * Math.PI);
@@ -275,6 +278,7 @@ function drawMoonPhase() {
         moonPhaseContext.fill();
 
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.rect(0, 0, moonPhaseCanvas.width / 2,
                               moonPhaseCanvas.height);
         moonPhaseContext.fill();
@@ -294,6 +298,7 @@ function drawMoonPhase() {
         // Waxing gibbous
         moonPhaseContext.scale(scaleFactorX, 1);
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.moveTo(0, moonPhaseCanvas.height);
         moonPhaseContext.lineTo(moonPhaseCanvas.width / 2 / scaleFactorX, 190);
         moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
@@ -319,6 +324,7 @@ function drawMoonPhase() {
         // Waning gibbous
         moonPhaseContext.scale(scaleFactorX, 1);
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.moveTo(moonPhaseCanvas.width, 0);
         moonPhaseContext.lineTo(moonPhaseCanvas.width / 2 / scaleFactorX, 10);
         moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
@@ -345,6 +351,7 @@ function drawMoonPhase() {
         // Waning crescent
         moonPhaseContext.scale(scaleFactorX, 1);
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.arc(moonPhaseCanvas.width / 2 / scaleFactorX,
                              moonPhaseCanvas.height / 2,
                              90, 0.5 * Math.PI, 1.5 * Math.PI);
@@ -352,6 +359,7 @@ function drawMoonPhase() {
         moonPhaseContext.fill();
 
         moonPhaseContext.beginPath();
+        moonPhaseContext.fillStyle = "rgba(0, 0, 0, 0.8)";
         moonPhaseContext.rect(moonPhaseCanvas.width / 2, 0, moonPhaseCanvas.width / 2,
                               moonPhaseCanvas.height);
         moonPhaseContext.fill();

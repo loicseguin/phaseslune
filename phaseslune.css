@@ -72,6 +72,10 @@ p {
     background-color: #fafafa;
 }
 
+#moonpos>p {
+    height: 36px;
+}
+
 #hour {
     display: inline-block;
     text-align: right;
