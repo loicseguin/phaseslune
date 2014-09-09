@@ -91,7 +91,13 @@ p {
 
 #speedInfo {
     text-align: right;
-    float: right;
+    margin-left: 0.8rem;
+    margin-right: 0.8rem;
+}
+
+input[type="checkbox"] {
+    margin-left: 1rem;
+    margin-right: 0.3rem;
 }
 
 canvas {
