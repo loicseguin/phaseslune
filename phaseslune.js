@@ -109,10 +109,26 @@ function mouseUp(e) {
 
 function initFigure() {
     // Draw Moon's orbit
-    mainContext.strokeStyle = "#ddd";
     mainContext.beginPath();
+    mainContext.strokeStyle = "#ddd";
+    mainContext.lineWidth = 1;
     mainContext.arc(centerx, centery, moonOrbitRadius, 0, 2 * Math.PI);
     mainContext.stroke();
+
+    // Draw Sun light rays
+    for (var y = 50; y < 500; y += 100) {
+        mainContext.beginPath();
+        mainContext.strokeStyle = "#ffdb58";
+        mainContext.lineCap = "round";
+        mainContext.lineWidth = 5;
+        mainContext.moveTo(20, y);
+        mainContext.lineTo(80, y);
+        mainContext.moveTo(75, y + 5);
+        mainContext.lineTo(80, y);
+        mainContext.moveTo(75, y - 5);
+        mainContext.lineTo(80, y);
+        mainContext.stroke();
+    }
 
     // Draw Moon
     moon.onload = drawMoon();
