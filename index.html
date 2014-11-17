@@ -61,32 +61,50 @@
         </div>
     </div>
 
-    <p>
-        <a class="customButton" href="javascript:void(0)" 
-            onclick="launchAnimation();" ontouchstart="">Animer</a>
-        <a class="customButton" href="javascript:void(0)" 
-            onclick="pause();" ontouchstart="">Arrêter</a>
+    <div id="controls">
+        <p>
+            <a class="customButton" href="javascript:void(0)" 
+                onclick="launchAnimation();" ontouchstart="">Animer</a>
+            <a class="customButton" href="javascript:void(0)" 
+                onclick="pause();" ontouchstart="">Arrêter</a>
 
-        <span id="speedInfo">
-            Vitesse de l'animation
-            <input id="speedSlider" type="range"
-            min="0" max="8000" step="100" value="4000" />
-        </span>
+            <span id="speedInfo">
+                Vitesse de l'animation
+                <input id="speedSlider" type="range"
+                min="0" max="8000" step="100" value="4000" />
+            </span>
 
-        <input type="checkbox" name="Terre/Lune" checked="true"
-        onclick="togglePageElementVisibility(drawingarea)">Terre/Lune</input>
+            <input type="checkbox" name="Terre/Lune" checked="true"
+            onclick="togglePageElementVisibility(drawingarea)">Terre/Lune</input>
 
-        <input type="checkbox" name="ImagePhase" checked="true"
-        onclick="togglePageElementVisibility(moonphasecontainer)">Image phase</input>
+            <input type="checkbox" name="ImagePhase" checked="true"
+            onclick="togglePageElementVisibility(moonphasecontainer)">Image phase</input>
 
-        <input type="checkbox" name="Informations" checked="true"
-        onclick="togglePageElementVisibility(numinfo)">Informations</input>
+            <input type="checkbox" name="Informations" checked="true"
+            onclick="togglePageElementVisibility(numinfo)">Informations</input>
 
-    </p>
+        </p>
+    </div>
+
+    <div id="credits">
+        Photographies :
+        Terre,
+        <a href="https://www.flickr.com/photos/gsfc/7394700302/in/photostream/">
+            NASA Goddard Photo and Video
+        </a>;
+        Lune de face,
+        <a href="https://commons.wikimedia.org/wiki/File%3AFull_Moon_Luc_Viatour.jpg">
+            Luc Viatour
+        </a>;
+        Lune du Nord,
+        <a href="http://www.nasa.gov/multimedia/imagegallery/image_feature_2054.html#.VBD9dUvblJQ">
+            NASA/GSFC/Arizona State University
+        </a>.
+    </div>
 
     <div id="debug"></div>
 
     <script src="phaseslune.js"></script>
-    
+
 </body>
 </html>

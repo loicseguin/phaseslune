@@ -1,15 +1,22 @@
+@import url(http://fonts.googleapis.com/css?family=Alegreya:400italic,700italic,400,700);
+@import url(http://fonts.googleapis.com/css?family=Quintessential);
+
 body {
+    font-family: Alegreya;
+    color: #333;
     width: 830px;
     margin: 0 auto;
 }
 
 h1 {
-    margin: 10px auto;
+    font-size: 3rem;
     text-align: center;
+    font-family: Quintessential;
+    color: #800000;
 }
 
 p {
-    margin: 0 13px;
+    margin: 0.7rem 13px;
 }
 
 #images {
@@ -26,6 +33,7 @@ p {
 	-ms-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-moz-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
 	-webkit-box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    font-size: 0.9rem;
 }
 
 #drawingarea {
@@ -95,6 +103,10 @@ p {
     margin-right: 0.8rem;
 }
 
+#controls {
+    font-size: 0.9rem;
+}
+
 input[type="checkbox"] {
     margin-left: 1rem;
     margin-right: 0.3rem;
@@ -131,4 +143,13 @@ canvas {
 .customButton:active {
     background: -webkit-linear-gradient(#909090,#808080,#808080,#707070);
     background: linear-gradient(#909090,#808080,#808080,#707070);
+}
+
+#instructions {
+    font-size: 20px;
+}
+
+#credits {
+    margin: 0 1rem;
+    font-size: 0.5rem;
 }
